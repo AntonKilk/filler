@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/macbook/Desktop/Hive/filler'
+make: Leaving directory `/Users/macbook/Desktop/Hive/filler'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
