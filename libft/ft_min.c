@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_min.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 14:04:09 by akilk             #+#    #+#             */
-/*   Updated: 2022/06/23 14:33:17 by akilk            ###   ########.fr       */
+/*   Created: 2022/06/28 20:13:47 by akilk             #+#    #+#             */
+/*   Updated: 2022/06/28 20:53:24 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_filler.h"
+#include "libft.h"
 
-int	error(char **str, char *msg)
+int	ft_min(int a, int b)
 {
-	if (str)
-		ft_strdel(str);
-	ft_putendl_fd(msg, 2);
-	return (0);
+	if (a <= b)
+		return (a);
+	else
+		return (b);
 }

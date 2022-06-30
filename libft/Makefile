@@ -6,7 +6,7 @@
 #    By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 13:25:11 by akilk             #+#    #+#              #
-#    Updated: 2022/03/14 09:58:55 by akilk            ###   ########.fr        #
+#    Updated: 2022/06/28 20:15:17 by akilk            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRC = ft_atoi.c\
 			ft_isbetween.c\
 			ft_abs.c\
 			ft_max.c\
+			ft_min.c\
 			ft_lstrev.c\
 			ft_swap.c\
 			ft_foreach.c\

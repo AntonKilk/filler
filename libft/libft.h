@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:26:14 by akilk             #+#    #+#             */
-/*   Updated: 2022/03/14 09:52:26 by akilk            ###   ########.fr       */
+/*   Updated: 2022/06/28 20:14:43 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int		ft_isbetween(long long min, long long max, long long value);
 int		ft_abs(int n);
 int		ft_max(int a, int b);
+int		ft_min(int a, int b);
 int		ft_swap(int *a, int *b);
 void	ft_foreach(int *tab, int length, void (*f)(int));
 void	ft_lstrev(t_list **alst);

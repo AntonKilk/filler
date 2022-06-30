@@ -6,68 +6,85 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:41:18 by akilk             #+#    #+#             */
-/*   Updated: 2022/06/27 16:55:30 by akilk            ###   ########.fr       */
+/*   Updated: 2022/06/30 10:40:14 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_filler.h"
 
-int	get_token_size(t_token *token)
+int	get_token_size(t_token *token, char *line)
 {
-	char		*line;
-
-	line = NULL;
-	if (get_next_line(0, &line) <= 0)
-		return (error(NULL, "Input error in get_token_size()"));
 	if (!ft_strstr(line, "Piece"))
-		return (error(&line, "Failed to find token size in get_token_size()"));
+		return (error(NULL, "Failed to find token size in get_token_size()"));
 	token->height = ft_atoi(ft_strchr(line, ' '));
 	token->width = ft_atoi(ft_strrchr(line, ' '));
-	ft_strdel(&line);
 	if (!token->height || !token->width)
 		return (error(NULL, "Error, invalid board size in get_token_size()"));
 	return (1);
 }
 
-int	make_token(t_game *game)
+int	fill_token(t_token *token, char **line)
 {
-	int		i;
+	int	i;
 
-	token->data = (char **)ft_memalloc(sizeof (char *) * (token->height + 1));
-	if (!token->data)
-		return(error(NULL, "Error allocating token in make_token()"));
 	i = 0;
 	while (i < token->height)
 	{
-		token->data[i] = ft_strnew(sizeof (char) * token->width);
-		if (!token->data[i])
-			return(error(token->data, "Error allocating row in make_token()"));
+		get_next_line(0, line);
+		ft_memcpy(token->map[i], *line, token->width);
+		if (!token->map[i])
+			return(error(token->map, "Error allocating token->map in fill_token()"));
+		if (!validate_line(token->width,token->map[i], ".*"))
+			return (error(token->map, "Error validating map in fill_token()"));
+		printf("%s\n", token->map[i]);
 		i++;
 	}
 	return (1);
 }
 
-int	read_board(t_game *game)
+int	get_shape(t_token *token)
 {
+	int		w;
+	int		h;
+	char	c;
 
-	char	*row;
-	int		ret;
-	int		i;
-
-	if (!make_board(game))
-		return (error(NULL, "Error making board in read_board()"));
-	i = 0;
-	row = NULL;
-	get_next_line(0, &row); //skip line 01234...
-	while (i < game->height)
+	h = 0;
+	token->start.x = token->width;
+	token->start.y = token->height;
+	while (h < token->height)
 	{
-		if (get_next_line(0, &row) <= 0)
-			return (error(game->board, "Error reading line in read_board()"));
-		ft_memcpy(game->board[i], row + 4, game->width);
-		printf("%s\n", game->board[i]);
-		//add validation of symbols and width
-		ft_strdel(&row);
-		i++;
+		w = 0;
+		while (w < token->width)
+		{
+			c = token->map[h][w];
+			if (c == '*')
+			{
+				token->start.x = ft_min(w, token->start.x);
+				token->end.x = ft_max(w, token->end.x);
+				token->start.y = ft_min(h, token->start.y);
+				token->end.y = ft_max(h, token->end.y);
+			}
+			w++;
+		}
+		h++;
 	}
+	token->dims.x = token->end.x - token->start.x + 1;
+	token->dims.y = token->end.y - token->start.y + 1;
+	return (1);
+}
+
+int	read_token(t_token *token, char **line)
+{
+	if (!get_token_size(token, *line))
+		return(error(NULL, "Error getting token size in read_token()"));
+	token->map = (char **)ft_memalloc(sizeof (char *) * (token->height + 1));
+	if (!token->map)
+		return(error(NULL, "Error allocating board in read_token()"));
+	if (!make_map(token->map, token->height, token->width))
+		return (error(line, "Error creating board in read_token()"));
+	if (!fill_token(token, line))
+		return (error (line, "Error filling board in read_token()"));
+	if (!get_shape(token))
+		return (error (line, "Error getting shape in read_token()"));
 	return (1);
 }
