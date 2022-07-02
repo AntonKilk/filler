@@ -6,12 +6,11 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/06/30 13:38:32 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/02 18:14:35 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_filler.h"
-
 
 // Find first cell from up left corner that contains my territory symbol
 int	find_me(t_game *game)
@@ -40,61 +39,91 @@ int	find_me(t_game *game)
 	return (0);
 }
 
-int	is_overlap(char a, char b)
+// int	is_overlap(char a, char b)
+// {
+// 	if (a == b)
+// 		return (1);
+// 	return (0);
+// }
+
+void	clear(char **board, t_token *token, int x, int y)
 {
-	if (a == b)
-		return (1);
-	return (0);
+	int		i;
+	int		j;
+	char	t;
+	char	b;
+
+	i = 0;
+	while (i < token->height)
+	{
+		j = 0;
+		while (j < token->width)
+		{
+			t = token->map[j][i];
+			b = board[i+y][j+x];
+			if (t != '.' && t == b)
+				b = '.';
+			j++;
+		}
+		i++;
+	}
 }
 
-int	put_piece(t_game *game, t_token *token)
+static int	try_putput(t_game *game, t_token *token, int x, int y)
 {
-	t_coords	start;
-	t_coords	end;
-	int	w;
-	int	h;
-	int	overlaps;
-	char	c;
+	int	i;
+	int	j;
+	int	overlap;
+	char	t;
+	int	remove_dot;
+	int	dot;
 
-	overlaps = 0;
-	h = 0;
-	start.y = game->place.y - token->dims.y;
-	end.y = game->place.x + token->dims.y;
-	end.x = game->place.x + token->dims.x;
-	while (start.y <= end.y)
+	overlap = 0;
+	i = 0;
+	remove_dot = 0;
+	dot = 0;
+	while (i < token->dims.y)
 	{
-		if (start.y++ < 0)
-		w = 0;
-		start.x = game->place.x - token->dims.x;
-		while (start.x <= end.x)
+		j = 0;
+		while (j < token->dims.x)
 		{
-			if (start.x++ < 0)
-				continue ;
-			c = game->board[start.y][start.x];
-			//overlaps with enemy
-			if (is_overlap(ft_toupper(c), game->enemy))
-				return (0);
-			//overlaps with me
-			if (is_overlap(ft_toupper(c), game->me))
-				overlaps++;
-			if (overlaps > 1)
-				return (0);
+			t = token->map[i + token->start.y][j + token->start.x];
+			if (t == '.' && remove_dot == 0)
+				dot--;
+			// printf("t: %c, b: %c\n", t, b);
+			if (t != '.')
+			{
+				//printf("t: %c, b: %c\n", t, b);
+				remove_dot = 1;
+				if ((x + j >= game->width) || (y + i >= game->height)
+					|| ft_toupper(game->board[i+y][x+j+dot]) == game->enemy)
+					return (-1);
+				// else if (overlap > 1)
+				// 	return (-1);
+				else if (ft_toupper(game->board[i+y][x+j+dot]) == game->me)
+					overlap++;
+				game->board[i+y][x+j+dot] = game->me;
+			}
+			j++;
 		}
+		i++;
 	}
+	printf("overlap: %d\n", overlap);
 	return (0);
 }
 
 int	try_put(t_game *game, t_token *token)
 {
-	int			w;
-	int			h;
-	t_coords	coords;
-
 	//find first place on map to attach own detail
 	if (!find_me(game))
 		return (error(NULL, "My territory not found in try_put()"));
-	//Check that counter of overlap return 1
-	//chek that not crossing borders of board and enemy territory
-	put_piece(game, token);
+	try_putput(game, token, game->place.x, game->place.y);
+	printf("After placement\n");
+	int i = 0;
+	while (i < game->height)
+	{
+		printf("%s\n", game->board[i]);
+		i++;
+	}
 	return (0);
 }
