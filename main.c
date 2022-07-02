@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:43:53 by akilk             #+#    #+#             */
-/*   Updated: 2022/06/30 11:39:57 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/02 18:22:49 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(void)
 
 	init(&game, &token);
 	read_data(&game, &token);
-	try_put(&game, &token);
+	try_solve(&game, &token);
 	// printf("me: %c\n", game.me);
 	// printf("enemy: %c\n", game.enemy);
 	// printf("height: %d\n", game.height);

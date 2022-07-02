@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:48:27 by akilk             #+#    #+#             */
-/*   Updated: 2022/06/29 13:27:48 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/02 18:22:41 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ int	fill_token(t_token *token, char **line);
 int	read_token(t_token *token, char **line);
 
 /* play.c */
-int	try_put(t_game *game, t_token *token);
+int	try_solve(t_game *game, t_token *token);
 
 #endif

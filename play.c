@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/02 18:14:35 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/02 18:22:32 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,37 +39,7 @@ int	find_me(t_game *game)
 	return (0);
 }
 
-// int	is_overlap(char a, char b)
-// {
-// 	if (a == b)
-// 		return (1);
-// 	return (0);
-// }
-
-void	clear(char **board, t_token *token, int x, int y)
-{
-	int		i;
-	int		j;
-	char	t;
-	char	b;
-
-	i = 0;
-	while (i < token->height)
-	{
-		j = 0;
-		while (j < token->width)
-		{
-			t = token->map[j][i];
-			b = board[i+y][j+x];
-			if (t != '.' && t == b)
-				b = '.';
-			j++;
-		}
-		i++;
-	}
-}
-
-static int	try_putput(t_game *game, t_token *token, int x, int y)
+static int	try_put(t_game *game, t_token *token, int x, int y)
 {
 	int	i;
 	int	j;
@@ -112,12 +82,12 @@ static int	try_putput(t_game *game, t_token *token, int x, int y)
 	return (0);
 }
 
-int	try_put(t_game *game, t_token *token)
+int	try_solve(t_game *game, t_token *token)
 {
 	//find first place on map to attach own detail
 	if (!find_me(game))
 		return (error(NULL, "My territory not found in try_put()"));
-	try_putput(game, token, game->place.x, game->place.y);
+	try_put(game, token, game->place.x, game->place.y);
 	printf("After placement\n");
 	int i = 0;
 	while (i < game->height)
