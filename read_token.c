@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:41:18 by akilk             #+#    #+#             */
-/*   Updated: 2022/06/30 10:40:14 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/04 09:58:21 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	fill_token(t_token *token, char **line)
 	return (1);
 }
 
-int	get_shape(t_token *token)
+int	get_token_shape(t_token *token)
 {
 	int		w;
 	int		h;
@@ -68,7 +68,7 @@ int	get_shape(t_token *token)
 		}
 		h++;
 	}
-	token->dims.x = token->end.x - token->start.x + 1;
+	token->dims.x = token->end.x - token->start.x + 1; //do I need them?
 	token->dims.y = token->end.y - token->start.y + 1;
 	return (1);
 }
@@ -84,7 +84,7 @@ int	read_token(t_token *token, char **line)
 		return (error(line, "Error creating board in read_token()"));
 	if (!fill_token(token, line))
 		return (error (line, "Error filling board in read_token()"));
-	if (!get_shape(token))
+	if (!get_token_shape(token))
 		return (error (line, "Error getting shape in read_token()"));
 	return (1);
 }

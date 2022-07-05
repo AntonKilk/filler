@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:43:53 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/02 18:22:49 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/04 09:42:25 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(void)
 	// printf("token width: %d\n", token.width);
 	printf("t start: w, h: %d, %d\n", token.start.x, token.start.y);
 	printf("t end: w, h: %d, %d\n",token.end.x, token.end.y);
-	printf("place: x:%d, y:%d\n", game.place.x, game.place.y);
-	printf("token dims: x:%d, y:%d\n", token.dims.x, token.dims.y);
+	printf("b start: w, h: %d, %d\n", game.start.x, game.start.y);
+	printf("b end: w, h: %d, %d\n",game.end.x, game.end.y);
 	return (0);
 }

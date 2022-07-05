@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 08:23:57 by akilk             #+#    #+#             */
-/*   Updated: 2022/06/29 13:20:45 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/04 09:55:12 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int read_data(t_game *game, t_token *token)
 		get_next_line(0, &line);
 		break ;
 	}
+	if (!get_zone_shape(game))
+		return (error (&line, "Error getting zone shape in read_board()"));
 	if (!read_token(token, &line))
 		return (error(NULL, "Error reading token in read_data()"));
 	ft_strdel(&line);

@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:48:27 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/02 18:22:41 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/04 09:56:41 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ typedef struct s_game
 	char		enemy;
 	int			width;
 	int			height;
-	t_coords	place;
+	t_coords	start;
+	t_coords	end;
 	char		**board;
+	t_coords	dims;
 }				t_game;
 
 /* main.c */
@@ -58,8 +60,9 @@ int	validate_line(int width, char *line, char *str);
 /* read_board.c */
 int	get_board_size(t_game *game, char *line);
 int	fill_board(t_game *game, char **line);
-int	make_board(t_game *game);
+int	get_zone_shape(t_game *game);
 int	read_board(t_game *game, char *line);
+
 
 /* read_token.c */
 int	get_token_size(t_token *token, char *line);

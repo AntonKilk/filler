@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 08:40:28 by akilk             #+#    #+#             */
-/*   Updated: 2022/06/28 22:16:23 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/04 09:58:06 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,37 @@ int	fill_board(t_game *game, char **line)
 		printf("%s\n", game->board[i]);
 		i++;
 	}
+	return (1);
+}
+
+int	get_zone_shape(t_game *game)
+{
+	int		w;
+	int		h;
+	char	c;
+
+	h = 0;
+	game->start.x = game->width;
+	game->start.y = game->height;
+	while (h < game->height)
+	{
+		w = 0;
+		while (w < game->width)
+		{
+			c = game->board[h][w];
+			if (ft_toupper(c) == game->me)
+			{
+				game->start.x = ft_min(w, game->start.x);
+				game->end.x = ft_max(w, game->end.x);
+				game->start.y = ft_min(h, game->start.y);
+				game->end.y = ft_max(h, game->end.y);
+			}
+			w++;
+		}
+		h++;
+	}
+	game->dims.x = game->end.x - game->start.x + 1; //do I need them?
+	game->dims.y = game->end.y - game->start.y + 1;
 	return (1);
 }
 
