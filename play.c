@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/05 20:57:18 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/05 20:59:56 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 	int	x_start;
 
 	x_start = start.x;
-	// int hui = 0;
+	// int run_draw = 0;
 	while (start.y <= end.y)
 	{
 		start.x = x_start;
@@ -83,7 +83,7 @@ static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 		{
 			if (can_put(game, token, start.x, start.y))
 			{
-				// if (hui == 4)
+				// if (run_draw == 4)
 				// {
 				// 	printf("here x: %d, y: %d\n", start.x, start.y);
 				// 	draw(game, token, start.x, start.y);
