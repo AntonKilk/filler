@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/05 20:59:56 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/05 21:00:34 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 				// 	// 	i++;
 				// 	// }
 				// }
-				// hui++;
+				// run_draw++;
 				printf("x: %d, y: %d\n", start.x, start.y);
 			}
 			start.x++;
