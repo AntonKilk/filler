@@ -1,4 +1,4 @@
-$$$ exec p1 : [PLAYER_NAME]
+$$$ exec p2 : [PLAYER_NAME]
 Plateau 6 9:
 	012345678
 000 .........

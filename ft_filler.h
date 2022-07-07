@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:48:27 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/04 09:56:41 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/06 09:49:16 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_game
 	t_coords	end;
 	char		**board;
 	t_coords	dims;
+	t_coords	result;
 }				t_game;
 
 /* main.c */

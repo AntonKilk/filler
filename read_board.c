@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 08:40:28 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/04 09:58:06 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/07 15:26:40 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	fill_board(t_game *game, char **line)
 			return(error(game->board, "Error allocating game->board in fill_board()"));
 		if (!validate_line(game->width,game->board[i], ".xXoO"))
 			return (error(game->board, "Error validating line in fill_board()"));
-		printf("%s\n", game->board[i]);
+		// printf("%s\n", game->board[i]);
 		i++;
 	}
 	return (1);
@@ -70,13 +70,15 @@ int	get_zone_shape(t_game *game)
 		}
 		h++;
 	}
-	game->dims.x = game->end.x - game->start.x + 1; //do I need them?
+	game->dims.x = game->end.x - game->start.x + 1;
 	game->dims.y = game->end.y - game->start.y + 1;
 	return (1);
 }
 
 int	read_board(t_game *game, char *line)
 {
+	ft_bzero(&(game->start), sizeof(game->start));
+	ft_bzero(&(game->end), sizeof(game->end));
 	if (!get_board_size(game, line))
 		return(error(&line, "Error getting board size in read_board()"));
 	game->board = (char **)ft_memalloc(sizeof (char *) * (game->height + 1));

@@ -1,6 +1,14 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/macbook/Desktop/Hive/filler'
+gcc    -c -o read.o read.c
+/Library/Developer/CommandLineTools/usr/bin/make -C ./libft
+ 
+make[1]: Entering directory `/Users/macbook/Desktop/Hive/filler/libft'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/Users/macbook/Desktop/Hive/filler/libft'
+ 
+cp libft/libft.a akilk.filler
+gcc -Wall -Wextra -Werror -c main.c read.c read_board.c read_token.c play.c
+ar -rcs akilk.filler main.o read.o read_board.o read_token.o play.o
 make: Leaving directory `/Users/macbook/Desktop/Hive/filler'
  
-make: *** No targets specified and no makefile found.  Stop.
-

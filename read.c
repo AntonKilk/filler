@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 08:23:57 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/04 09:55:12 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/07 16:14:31 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	validate_line(int width, char *line, char *str)
 {
-	if (width != ft_strlen(line))
+	if ((size_t)width != ft_strlen(line))
 		return (0);
 	while (*line)
 	{
@@ -86,12 +86,11 @@ int read_data(t_game *game, t_token *token)
 		if (!fill_board(game, &line))
 			return (error (&line, "Error filling board in read_data()"));
 		get_next_line(0, &line);
-		break ;
+		if (!get_zone_shape(game))
+			return (error (&line, "Error getting zone shape in read_board()"));
+		if (!read_token(token, &line))
+			return (error(NULL, "Error reading token in read_data()"));
 	}
-	if (!get_zone_shape(game))
-		return (error (&line, "Error getting zone shape in read_board()"));
-	if (!read_token(token, &line))
-		return (error(NULL, "Error reading token in read_data()"));
 	ft_strdel(&line);
 	return (1);
 }

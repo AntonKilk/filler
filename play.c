@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/05 21:00:34 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/06 09:49:44 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,26 @@ int	can_put(t_game *game, t_token *token, int x, int y)
 	return (0);
 }
 
-void	draw(t_game *game, t_token *token, int x, int y)
-{
-	int	i;
-	int	j;
-	char	t;
+// void	draw(t_game *game, t_token *token, int x, int y)
+// {
+// 	int	i;
+// 	int	j;
+// 	char	t;
 
-	i = 0;
-	while (i < token->height)
-	{
-		j = 0;
-		while (j < token->width)
-		{
-			t = token->map[i][j];
-			if (t != '.')
-				game->board[i+y][x+j] = 'A';
-			j++;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < token->height)
+// 	{
+// 		j = 0;
+// 		while (j < token->width)
+// 		{
+// 			t = token->map[i][j];
+// 			if (t != '.')
+// 				game->board[i+y][x+j] = 'A';
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 {
@@ -95,7 +95,10 @@ static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 				// 	// }
 				// }
 				// run_draw++;
-				printf("x: %d, y: %d\n", start.x, start.y);
+				// printf("x: %d, y: %d\n", start.x, start.y);
+				game->result.x = start.x;
+				game->result.y = start.y;
+				return (1);
 			}
 			start.x++;
 		}
@@ -113,15 +116,9 @@ int	try_solve(t_game *game, t_token *token)
 	try_start.y = game->start.y - token->end.y;
 	try_end.x = game->end.x - token->start.x;
 	try_end.y = game->end.y - token->start.y;
-	printf("tryst x %d, y: %d\n", try_start.x, try_start.y);
-	printf("tryend x %d, y: %d\n", try_end.x, try_end.y);
-	try_put(game, token, try_start, try_end);
-	// printf("After placement\n");
-	// int i = 0;
-	// while (i < game->height)
-	// {
-	// 	printf("%s\n", game->board[i]);
-	// 	i++;
-	// }
+	// printf("tryst x %d, y: %d\n", try_start.x, try_start.y);
+	// printf("tryend x %d, y: %d\n", try_end.x, try_end.y);
+	if (try_put(game, token, try_start, try_end))
+		return (1);
 	return (0);
 }

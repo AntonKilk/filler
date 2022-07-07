@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:41:18 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/04 09:58:21 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/07 15:28:24 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	fill_token(t_token *token, char **line)
 			return(error(token->map, "Error allocating token->map in fill_token()"));
 		if (!validate_line(token->width,token->map[i], ".*"))
 			return (error(token->map, "Error validating map in fill_token()"));
-		printf("%s\n", token->map[i]);
+		// printf("%s\n", token->map[i]);
 		i++;
 	}
 	return (1);
@@ -68,13 +68,16 @@ int	get_token_shape(t_token *token)
 		}
 		h++;
 	}
-	token->dims.x = token->end.x - token->start.x + 1; //do I need them?
+	token->dims.x = token->end.x - token->start.x + 1;
 	token->dims.y = token->end.y - token->start.y + 1;
 	return (1);
 }
 
 int	read_token(t_token *token, char **line)
 {
+	ft_bzero(&(token->start), sizeof(token->start));
+	ft_bzero(&(token->end), sizeof(token->end));
+	ft_bzero(&(token->dims), sizeof(token->dims));
 	if (!get_token_size(token, *line))
 		return(error(NULL, "Error getting token size in read_token()"));
 	token->map = (char **)ft_memalloc(sizeof (char *) * (token->height + 1));
