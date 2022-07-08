@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 08:23:57 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/08 21:34:32 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/08 22:42:09 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int read_data(t_game *game, t_token *token)
 	char	*line;
 
 	line = NULL;
-
 	if (!get_next_line(0, &line))
 	{
 		game->ended = 1;
 		ft_strdel(&line);
 		return (0);
 	}
+	fprintf(stderr, "line %d: %s\n", __LINE__, line);
 	if (!read_board(game, line))
 	{
 		fprintf(stderr, "read_board err\n");
@@ -94,16 +94,19 @@ int read_data(t_game *game, t_token *token)
 		fprintf(stderr, "fill_board err\n");
 		return (error (NULL, "Error filling board in read_data()"));
 	}
+	fprintf(stderr, "line %d: %s\n", __LINE__, line);
 	get_next_line(0, &line);
 	if (!get_zone_shape(game))
 	{
 		fprintf(stderr, "get_zone_shape\n");
 		return (error (NULL, "Error getting zone shape in read_board()"));
 	}
+	fprintf(stderr, "line %d: %s\n", __LINE__, line);
 	if (!read_token(token, &line))
 	{
 		fprintf(stderr, "read_token\n");
 		return (error(NULL, "Error reading token in read_data()"));
 	}
+	fprintf(stderr, "line %d: %s\n", __LINE__, line);
 	return (1);
 }

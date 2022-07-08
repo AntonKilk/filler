@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:43:53 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/08 20:54:33 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/08 22:29:11 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,12 @@ int	main(void)
 	}
 	while (!game.ended)
 	{
+		fprintf(stderr, "in main line %d\n", __LINE__);
 		if (!read_data(&game, &token))
+		{
+			fprintf(stderr, "main! line %d\n", __LINE__);
 			return (0);
+		}
 		if (try_solve(&game, &token, &result))
 		{
 			printf("%d %d\n", result.y, result.x);
