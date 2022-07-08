@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/06 09:49:44 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/08 13:29:14 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,16 @@ static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 		{
 			if (can_put(game, token, start.x, start.y))
 			{
-				// if (run_draw == 4)
+				// if (run_draw == 0)
 				// {
 				// 	printf("here x: %d, y: %d\n", start.x, start.y);
 				// 	draw(game, token, start.x, start.y);
-				// 	// int i = 0;
-				// 	// while (i < game->height)
-				// 	// {
-				// 	// 	printf("%s\n", game->board[i]);
-				// 	// 	i++;
-				// 	// }
+				// 	int i = 0;
+				// 	while (i < game->height)
+				// 	{
+				// 		printf("%s\n", game->board[i]);
+				// 		i++;
+				// 	}
 				// }
 				// run_draw++;
 				// printf("x: %d, y: %d\n", start.x, start.y);
@@ -107,7 +107,7 @@ static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 	return (0);
 }
 
-int	try_solve(t_game *game, t_token *token)
+int	try_solve(t_game *game, t_token *token, t_coords *result)
 {
 	t_coords try_start;
 	t_coords try_end;
@@ -116,9 +116,11 @@ int	try_solve(t_game *game, t_token *token)
 	try_start.y = game->start.y - token->end.y;
 	try_end.x = game->end.x - token->start.x;
 	try_end.y = game->end.y - token->start.y;
-	// printf("tryst x %d, y: %d\n", try_start.x, try_start.y);
-	// printf("tryend x %d, y: %d\n", try_end.x, try_end.y);
 	if (try_put(game, token, try_start, try_end))
+	{
+		result->x = game->result.x;
+		result->y = game->result.y;
 		return (1);
+	}
 	return (0);
 }

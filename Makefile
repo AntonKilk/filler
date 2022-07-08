@@ -1,32 +1,22 @@
-.PHONY: all, clean, fclean, re
-
-CC = gcc
-
-FLAGS = -Wall -Wextra -Werror -c
-
-LIBFT = ./libft/libft.a
-
 NAME = akilk.filler
+SRCS = *.c
+OBJS = *.o
+HDR = ft_filler.h
+FLAGS = -Wall -Wextra -Werror
+LIBFT = libft/
 
-SRCS = main.c read.c read_board.c read_token.c play.c
+all: $(NAME)
 
-OBJS = $(SRCS:%.c=%.o)
+$(NAME):
+	make -C $(LIBFT)
+	gcc $(FLAGS) -o $(NAME) $(SRCS) -I $(HDR) -L. libft/libft.a
 
-$(NAME): $(OBJS)
-	$(MAKE) -C ./libft
-	cp libft/libft.a $(NAME)
-	$(CC) $(FLAGS) $(SRCS)
-	ar -rcs $(NAME) $(OBJS)
+clean:
+	/bin/rm -f $(OBJS)
+	make -C $(LIBFT) clean
 
-all : $(NAME)
+fclean: clean
+	/bin/rm -f $(NAME)
+	make -C $(LIBFT) fclean
 
-clean :
-	$(MAKE) clean -C ./libft
-	rm -rf $(SURPL_O)
-	rm -rf $(OBJS)
-
-fclean : clean
-	$(MAKE) fclean -C ./libft
-	rm -rf $(NAME)
-
-re : fclean all
+re: fclean all

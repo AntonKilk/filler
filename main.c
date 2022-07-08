@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:43:53 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/07 16:20:12 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/08 20:54:33 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int	error(char **str, char *msg)
 	return (0);
 }
 
-int	init(t_game *game, t_token *token)
+int	init(t_game *game, t_token *token, t_coords *result)
 {
 	ft_bzero(game, sizeof(*game));
 	ft_bzero(token, sizeof(*token));
-	get_player(game);
+	ft_bzero(result, sizeof(*result));
+	if (!get_player(game))
+		return (0);
 	return (1);
 }
 
@@ -32,27 +34,46 @@ int	main(void)
 {
 	t_game game;
 	t_token token;
-	if (!init(&game, &token))
-		return (0);
-	while (1)
+	t_coords result;
+
+	if (!init(&game, &token, &result))
 	{
-		if ((!read_data(&game, &token)))
+		fprintf(stderr, "error initializing data\n");
+		return (0);
+	}
+	while (!game.ended)
+	{
+		if (!read_data(&game, &token))
 			return (0);
-		if (try_solve(&game, &token))
-			printf("%d %d\n", game.result.x, game.result.y);
+		if (try_solve(&game, &token, &result))
+		{
+			printf("%d %d\n", result.y, result.x);
+			fprintf(stderr, "%d %d\n", result.y, result.x);
+		}
 		else
 			break ;
 	}
-	// printf("me: %c\n", game.me);
-	// printf("enemy: %c\n", game.enemy);
-	// printf("height: %d\n", game.height);
-	// printf("width: %d\n", game.width);
-	// printf("token height: %d\n", token.height);
-	// printf("token width: %d\n", token.width);
-	// printf("t start: w, h: %d, %d\n", token.start.x, token.start.y);
-	// printf("t end: w, h: %d, %d\n",token.end.x, token.end.y);
-	// printf("b start: w, h: %d, %d\n", game.start.x, game.start.y);
-	// printf("b end: w, h: %d, %d\n",game.end.x, game.end.y);
+	//clean map and token
 	printf("0 0\n");
+	fprintf(stderr, "finished\n");
 	return (0);
 }
+
+// int i = 0;
+// 		int countme = 0;
+// 		int count_enemy = 0;
+// 		while (i < game.height)
+// 		{
+// 			int j = 0;
+// 			while (j < game.width)
+// 			{
+// 				if (ft_toupper(game.board[i][j]) == game.me)
+// 					countme++;
+// 				if (ft_toupper(game.board[i][j]) == game.enemy)
+// 					count_enemy++;
+// 				j++;
+// 			}
+// 			i++;
+// 		}
+// 		fprintf(stderr, "%d\n", count_enemy);
+// 		fprintf(stderr, "Player %c have %d cells, got token with %d cells, expecting %d cells next turn\n", game.me, countme, token.amount, countme+token.amount-1);

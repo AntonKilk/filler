@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:48:27 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/06 09:49:16 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/08 20:36:30 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ typedef struct s_game
 	char		**board;
 	t_coords	dims;
 	t_coords	result;
+	int			ended;
 }				t_game;
 
 /* main.c */
 int		main(void);
-int	init(t_game *game, t_token *token);
+int	init(t_game *game, t_token *token, t_coords *result);
 int	error(char **str, char *msg);
 
 /* read.c */
@@ -71,6 +72,6 @@ int	fill_token(t_token *token, char **line);
 int	read_token(t_token *token, char **line);
 
 /* play.c */
-int	try_solve(t_game *game, t_token *token);
+int	try_solve(t_game *game, t_token *token, t_coords *result);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 08:40:28 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/07 15:26:40 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/08 21:21:10 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	get_board_size(t_game *game, char *line)
 {
-	if (get_next_line(0, &line) <= 0)
-		return (error(NULL, "Input error in get_board_size()"));
+	// if (get_next_line(0, &line) <= 0)
+	// 	return (error(NULL, "Input error in get_board_size()"));
 	if (!ft_strstr(line, "Plateau"))
-		return (error(&line, "Failed to find board size in get_board_size()"));
+		return (error(NULL, "Failed to find board size in get_board_size()"));
 	game->height = ft_atoi(ft_strchr(line, ' '));
 	game->width = ft_atoi(ft_strrchr(line, ' '));
 	if (!game->height || !game->width)
@@ -38,7 +38,6 @@ int	fill_board(t_game *game, char **line)
 			return(error(game->board, "Error allocating game->board in fill_board()"));
 		if (!validate_line(game->width,game->board[i], ".xXoO"))
 			return (error(game->board, "Error validating line in fill_board()"));
-		// printf("%s\n", game->board[i]);
 		i++;
 	}
 	return (1);
@@ -79,12 +78,15 @@ int	read_board(t_game *game, char *line)
 {
 	ft_bzero(&(game->start), sizeof(game->start));
 	ft_bzero(&(game->end), sizeof(game->end));
-	if (!get_board_size(game, line))
-		return(error(&line, "Error getting board size in read_board()"));
-	game->board = (char **)ft_memalloc(sizeof (char *) * (game->height + 1));
-	if (!game->board)
-		return(error(&line, "Error allocating board in read_board()"));
-	if (!make_map(game->board, game->height, game->width))
-		return (error(&line, "Error creating board in read_board()"));
+	if (!game->height && !game->width)
+	{
+		if (!get_board_size(game, line))
+			return(error(&line, "Error getting board size in read_board()"));
+		game->board = (char **)ft_memalloc(sizeof (char *) * (game->height + 1));
+		if (!game->board)
+			return(error(&line, "Error allocating board in read_board()"));
+		if (!make_map(game->board, game->height, game->width))
+			return (error(&line, "Error creating board in read_board()"));
+	}
 	return (1);
 }
