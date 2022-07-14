@@ -6,18 +6,19 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:41:18 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/08 20:42:19 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/09 20:28:12 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_filler.h"
 
-int	get_token_size(t_token *token, char *line)
+int	get_token_size(t_token *token, char **line)
 {
-	if (!ft_strstr(line, "Piece"))
+	get_next_line(0, line);
+	if (!ft_strstr(*line, "Piece"))
 		return (error(NULL, "Failed to find token size in get_token_size()"));
-	token->height = ft_atoi(ft_strchr(line, ' '));
-	token->width = ft_atoi(ft_strrchr(line, ' '));
+	token->height = ft_atoi(ft_strchr(*line, ' '));
+	token->width = ft_atoi(ft_strrchr(*line, ' '));
 	if (!token->height || !token->width)
 		return (error(NULL, "Error, invalid board size in get_token_size()"));
 	return (1);
@@ -36,7 +37,6 @@ int	fill_token(t_token *token, char **line)
 			return(error(token->map, "Error allocating token->map in fill_token()"));
 		if (!validate_line(token->width,token->map[i], ".*"))
 			return (error(token->map, "Error validating map in fill_token()"));
-		// printf("%s\n", token->map[i]);
 		i++;
 	}
 	return (1);
@@ -75,10 +75,8 @@ int	get_token_shape(t_token *token)
 
 int	read_token(t_token *token, char **line)
 {
-	ft_bzero(&(token->start), sizeof(token->start));
-	ft_bzero(&(token->end), sizeof(token->end));
-	ft_bzero(&(token->dims), sizeof(token->dims));
-	if (!get_token_size(token, *line))
+	ft_bzero(token, sizeof(*token));
+	if (!get_token_size(token, line))
 		return(error(NULL, "Error getting token size in read_token()"));
 	token->map = (char **)ft_memalloc(sizeof (char *) * (token->height + 1));
 	if (!token->map)

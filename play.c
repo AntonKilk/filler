@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/08 13:29:14 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/14 13:26:04 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,33 +49,28 @@ int	can_put(t_game *game, t_token *token, int x, int y)
 	return (0);
 }
 
-// void	draw(t_game *game, t_token *token, int x, int y)
-// {
-// 	int	i;
-// 	int	j;
-// 	char	t;
+int	find_closest(t_coords enemy, t_coords me)
+{
+	int	diffX;
+	int	diffY;
+	int	result;
+	//enemy_end is always in opposite dir?
+	diffX = ft_abs(me.x - enemy.x);
+	diffY = ft_abs(me.y - enemy.y);
+	/* the less the better(closer) */
+	result = (diffX * diffX) + (diffY * diffY);
+	return (result);
+}
 
-// 	i = 0;
-// 	while (i < token->height)
-// 	{
-// 		j = 0;
-// 		while (j < token->width)
-// 		{
-// 			t = token->map[i][j];
-// 			if (t != '.')
-// 				game->board[i+y][x+j] = 'A';
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
+int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 {
 	int	x_start;
+	int	result;
+	int	OK;
 
+	result = game->width * game->height * 4;
 	x_start = start.x;
-	// int run_draw = 0;
+	OK = 0;
 	while (start.y <= end.y)
 	{
 		start.x = x_start;
@@ -83,31 +78,25 @@ static int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 		{
 			if (can_put(game, token, start.x, start.y))
 			{
-				// if (run_draw == 0)
-				// {
-				// 	printf("here x: %d, y: %d\n", start.x, start.y);
-				// 	draw(game, token, start.x, start.y);
-				// 	int i = 0;
-				// 	while (i < game->height)
-				// 	{
-				// 		printf("%s\n", game->board[i]);
-				// 		i++;
-				// 	}
-				// }
-				// run_draw++;
-				// printf("x: %d, y: %d\n", start.x, start.y);
-				game->result.x = start.x;
-				game->result.y = start.y;
-				return (1);
+				OK = 1;
+				if (find_closest(game->enemy_end, start) < result)
+				{
+					result = find_closest(game->enemy_end, start);
+					game->result.x = start.x;
+					game->result.y = start.y;
+				}
 			}
 			start.x++;
 		}
 		start.y++;
 	}
-	return (0);
+	if (OK)
+		return (1);
+	else
+		return (0);
 }
 
-int	try_solve(t_game *game, t_token *token, t_coords *result)
+int	try_solve(t_game *game, t_token *token)
 {
 	t_coords try_start;
 	t_coords try_end;
@@ -117,10 +106,6 @@ int	try_solve(t_game *game, t_token *token, t_coords *result)
 	try_end.x = game->end.x - token->start.x;
 	try_end.y = game->end.y - token->start.y;
 	if (try_put(game, token, try_start, try_end))
-	{
-		result->x = game->result.x;
-		result->y = game->result.y;
 		return (1);
-	}
 	return (0);
 }

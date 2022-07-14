@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 08:23:57 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/08 22:42:09 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/14 13:25:04 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,39 +74,19 @@ int read_data(t_game *game, t_token *token)
 	char	*line;
 
 	line = NULL;
-	if (!get_next_line(0, &line))
-	{
-		game->ended = 1;
-		ft_strdel(&line);
-		return (0);
-	}
-	fprintf(stderr, "line %d: %s\n", __LINE__, line);
-	if (!read_board(game, line))
-	{
-		fprintf(stderr, "read_board err\n");
-		return(error(NULL, "Error reading board in read_data()"));
-	}
+	//if beginning of game read Plateu or return next line if not
+	if (!create_board(game, &line))
+		return (error(&line, "No return in read_data()"));
+	//skip one line 012345 in the beginning of game
 	get_next_line(0, &line);
-	// if (!ft_strstr(line, "012345"))
-	// 	continue ;
+	//start reading board
 	if (!fill_board(game, &line))
-	{
-		fprintf(stderr, "fill_board err\n");
-		return (error (NULL, "Error filling board in read_data()"));
-	}
-	fprintf(stderr, "line %d: %s\n", __LINE__, line);
-	get_next_line(0, &line);
+		return (error (&line, "Error filling board in read_data()"));
 	if (!get_zone_shape(game))
-	{
-		fprintf(stderr, "get_zone_shape\n");
-		return (error (NULL, "Error getting zone shape in read_board()"));
-	}
-	fprintf(stderr, "line %d: %s\n", __LINE__, line);
+		return (error (&line, "Error getting zone shape in read_board()"));
+	if (!get_enemy_shape(game))
+		return (error (&line, "Error getting enemy shape in read_board()"));
 	if (!read_token(token, &line))
-	{
-		fprintf(stderr, "read_token\n");
-		return (error(NULL, "Error reading token in read_data()"));
-	}
-	fprintf(stderr, "line %d: %s\n", __LINE__, line);
+		return (error(&line, "Error reading token in read_data()"));
 	return (1);
 }
