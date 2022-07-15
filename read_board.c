@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 08:40:28 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/14 13:12:47 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/15 20:14:24 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	get_board_size(t_game *game, char **line)
 	game->width = ft_atoi(ft_strrchr(*line, ' '));
 	if (!game->height || !game->width)
 		return (error(NULL, "Error, invalid board size in get_board_size()"));
+	ft_strdel(line);
 	return (1);
 }
 
@@ -38,6 +39,7 @@ int	fill_board(t_game *game, char **line)
 			return(error(game->board, "Error allocating game->board in fill_board()"));
 		if (!validate_line(game->width,game->board[i], ".xXoO"))
 			return (error(game->board, "Error validating line in fill_board()"));
+		free(*line);
 		i++;
 	}
 	return (1);
@@ -116,7 +118,10 @@ int	create_board(t_game *game, char **line)
 		else if(!ft_strstr(*line, "Plateau"))
 			return (0);
 		else
-			 return (1);
+		{
+			ft_strdel(line);
+			return (1);
+		}
 	}
 	else
 	{

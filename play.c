@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/14 13:26:04 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/15 20:54:17 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ int	find_closest(t_coords enemy, t_coords me)
 
 int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 {
-	int	x_start;
+	int	tmp;
 	int	result;
 	int	OK;
 
 	result = game->width * game->height * 4;
-	x_start = start.x;
+	tmp = start.x;
 	OK = 0;
 	while (start.y <= end.y)
 	{
-		start.x = x_start;
+		start.x = tmp;
 		while (start.x <= end.x)
 		{
 			if (can_put(game, token, start.x, start.y))

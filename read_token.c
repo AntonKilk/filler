@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:41:18 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/09 20:28:12 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/15 20:24:34 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	get_token_size(t_token *token, char **line)
 	token->width = ft_atoi(ft_strrchr(*line, ' '));
 	if (!token->height || !token->width)
 		return (error(NULL, "Error, invalid board size in get_token_size()"));
+	ft_strdel(line);
 	return (1);
 }
 
@@ -37,6 +38,7 @@ int	fill_token(t_token *token, char **line)
 			return(error(token->map, "Error allocating token->map in fill_token()"));
 		if (!validate_line(token->width,token->map[i], ".*"))
 			return (error(token->map, "Error validating map in fill_token()"));
+		ft_strdel(line);
 		i++;
 	}
 	return (1);
@@ -75,6 +77,8 @@ int	get_token_shape(t_token *token)
 
 int	read_token(t_token *token, char **line)
 {
+	if (token->map)
+		ft_free_tab(token->map, token->height);
 	ft_bzero(token, sizeof(*token));
 	if (!get_token_size(token, line))
 		return(error(NULL, "Error getting token size in read_token()"));

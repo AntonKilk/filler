@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 08:23:57 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/14 13:25:04 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/15 20:08:55 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int read_data(t_game *game, t_token *token)
 		return (error(&line, "No return in read_data()"));
 	//skip one line 012345 in the beginning of game
 	get_next_line(0, &line);
+	ft_strdel(&line);
 	//start reading board
 	if (!fill_board(game, &line))
 		return (error (&line, "Error filling board in read_data()"));

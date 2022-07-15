@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:43:53 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/14 16:08:30 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/15 20:31:47 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,10 @@
 
 void	freeall(t_game *game, t_token *token)
 {
-	int	i;
-
-	i = 0;
 	if (game->board)
-	{
-		while (game->board[i])
-		{
-			printf("in board\n");
-			free(game->board[i++]);
-		}
-		//ft_strdel(game->board);
-	}
-	i = 0;
+		ft_free_tab(game->board, game->height);
 	if (token->map)
-	{
-		while (token->map[i])
-		{
-			printf("in token\n");
-			free(token->map[i++]);
-		}
-		//ft_strdel(token->map);
-	}
+		ft_free_tab(token->map, token->height);
 }
 
 int	error(char **str, char *msg)
@@ -80,8 +62,6 @@ int	main(void)
 			freeall(&game, &token);
 			return (0);
 		}
-		// if (game.ended)
-		// 	break ;
 		if (try_solve(&game, &token))
 			print_coor(game.result.y, game.result.x);
 		else
