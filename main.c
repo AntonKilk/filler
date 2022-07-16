@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:43:53 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/16 20:13:37 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/16 20:20:40 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ int	main(void)
 			return (0);
 		}
 		if (try_solve(&game, &token))
-		{
-			// fprintf(stderr, "output Y:%d,X%d\n", game.result.y, game.result.x);
 			print_coor(game.result.y, game.result.x);
-		}
 		else
 			break ;
 	}
