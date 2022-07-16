@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 08:40:28 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/15 20:14:24 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/16 12:43:19 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	fill_board(t_game *game, char **line)
 			return(error(game->board, "Error allocating game->board in fill_board()"));
 		if (!validate_line(game->width,game->board[i], ".xXoO"))
 			return (error(game->board, "Error validating line in fill_board()"));
-		free(*line);
+		ft_strdel(line);
 		i++;
 	}
 	return (1);
