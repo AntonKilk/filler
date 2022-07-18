@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 08:23:57 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/16 20:12:38 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/18 11:35:31 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,21 @@ int	make_map(char **map, int height, int width)
 	{
 		map[i] = ft_strnew(sizeof (char) * width);
 		if (!map[i])
-			return(error(map, "Error allocating row in make_map()"));
+			return (error(map, "Error allocating row in make_map()"));
 		i++;
 	}
 	return (1);
 }
 
-int read_data(t_game *game, t_token *token)
+int	read_data(t_game *game, t_token *token)
 {
 	char	*line;
 
 	line = NULL;
-	//if beginning of game read Plateu or return next line if not
 	if (!create_board(game, &line))
 		return (error(&line, "No return in read_data()"));
-	//skip one line 012345 in the beginning of game
 	get_next_line(0, &line);
 	ft_strdel(&line);
-	//start reading board
 	if (!fill_board(game, &line))
 		return (error (&line, "Error filling board in read_data()"));
 	if (!get_zone_shape(game))

@@ -6,13 +6,13 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:48:27 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/14 13:27:38 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/18 11:37:31 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLER_H
+#ifndef FT_FILLER_H
 
-# define FILLER_H
+# define FT_FILLER_H
 
 # include <stdio.h> // clean
 # include "libft/libft.h"
@@ -51,12 +51,12 @@ typedef struct s_game
 }				t_game;
 
 /* main.c */
-int		main(void);
+int	main(void);
 int	init(t_game *game, t_token *token);
 int	error(char **str, char *msg);
 
 /* read.c */
-int read_data(t_game *game, t_token *token);
+int	read_data(t_game *game, t_token *token);
 int	get_player(t_game *game);
 int	make_map(char **map, int height, int width);
 int	validate_line(int width, char *line, char *str);
@@ -68,7 +68,6 @@ int	get_zone_shape(t_game *game);
 int	create_board(t_game *game, char **line);
 int	get_enemy_shape(t_game *game);
 
-
 /* read_token.c */
 int	get_token_size(t_token *token, char **line);
 int	fill_token(t_token *token, char **line);
@@ -76,5 +75,8 @@ int	read_token(t_token *token, char **line);
 
 /* play.c */
 int	try_solve(t_game *game, t_token *token);
+
+/* find_enemy.c */
+int	check_all_points(t_game *game, t_token *token, t_coords start);
 
 #endif

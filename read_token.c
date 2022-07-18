@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:41:18 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/15 20:24:34 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/18 11:23:28 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	fill_token(t_token *token, char **line)
 		get_next_line(0, line);
 		ft_memcpy(token->map[i], *line, token->width);
 		if (!token->map[i])
-			return(error(token->map, "Error allocating token->map in fill_token()"));
-		if (!validate_line(token->width,token->map[i], ".*"))
+			return (error(token->map, "Error allocating in fill_token()"));
+		if (!validate_line(token->width, token->map[i], ".*"))
 			return (error(token->map, "Error validating map in fill_token()"));
 		ft_strdel(line);
 		i++;
@@ -48,7 +48,6 @@ int	get_token_shape(t_token *token)
 {
 	int		w;
 	int		h;
-	char	c;
 
 	h = 0;
 	token->start.x = token->width;
@@ -58,8 +57,7 @@ int	get_token_shape(t_token *token)
 		w = 0;
 		while (w < token->width)
 		{
-			c = token->map[h][w];
-			if (c == '*')
+			if (token->map[h][w] == '*')
 			{
 				token->start.x = ft_min(w, token->start.x);
 				token->end.x = ft_max(w, token->end.x);
@@ -81,10 +79,10 @@ int	read_token(t_token *token, char **line)
 		ft_free_tab(token->map, token->height);
 	ft_bzero(token, sizeof(*token));
 	if (!get_token_size(token, line))
-		return(error(NULL, "Error getting token size in read_token()"));
+		return (error(NULL, "Error getting token size in read_token()"));
 	token->map = (char **)ft_memalloc(sizeof (char *) * (token->height + 1));
 	if (!token->map)
-		return(error(NULL, "Error allocating board in read_token()"));
+		return (error(NULL, "Error allocating board in read_token()"));
 	if (!make_map(token->map, token->height, token->width))
 		return (error(line, "Error creating board in read_token()"));
 	if (!fill_token(token, line))

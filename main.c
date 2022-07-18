@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:43:53 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/16 20:20:40 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/18 11:35:57 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	print_coor(int y, int x)
 
 int	main(void)
 {
-	t_game game;
-	t_token token;
+	t_game	game;
+	t_token	token;
 
 	if (!init(&game, &token))
 	{
