@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:43:53 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/18 11:35:57 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/18 18:31:53 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ int	main(void)
 	t_token	token;
 
 	if (!init(&game, &token))
-	{
-		fprintf(stderr, "error initializing data\n");
 		return (0);
-	}
 	while (!game.ended)
 	{
 		if (!read_data(&game, &token))
