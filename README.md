@@ -6,3 +6,7 @@ Your task is to “attach” it to your territory so that only one cell of terri
 Here is an example of a gameplay:
 
 ![filler](https://github.com/AntonKilk/filler/blob/master/img/filler.gif)
+
+To use it, clone the repo and:
+- do `make`. After that  run a virtual machine with a map and players like this: `./filler_vm -f ./maps/map00 -p1 players/carli.filler -p2 players/akilk.filler` or:
+- run a script `bash start.sh` to install and run one game.
