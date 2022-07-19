@@ -7,6 +7,14 @@ Here is an example of a gameplay:
 
 ![filler](https://github.com/AntonKilk/filler/blob/master/img/filler.gif)
 
+This is how initial board looks like in a console:
+
+![image](https://user-images.githubusercontent.com/51739460/179686811-311bb1d5-2c7b-4ec9-95aa-41bafc98b81a.png)
+
+Example of tokens:
+
+![image](https://user-images.githubusercontent.com/51739460/179687031-18ebf811-a14e-45c8-89b3-7b5d014440be.png)
+
 To use it, clone the repo and:
 - do `make`. After that  run a virtual machine with a map and players like this: `./filler_vm -f ./maps/map00 -p1 players/carli.filler -p2 players/akilk.filler` or:
 - run a script `bash start.sh` to install and run one game.
