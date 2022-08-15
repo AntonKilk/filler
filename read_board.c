@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 08:40:28 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/18 11:34:07 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/15 12:50:26 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,8 @@ int	create_board(t_game *game, char **line)
 		}
 		else if (!ft_strstr(*line, "Plateau"))
 			return (0);
-		else
-		{
-			ft_strdel(line);
-			return (1);
-		}
+		ft_strdel(line);
+		return (1);
 	}
 	else
 	{

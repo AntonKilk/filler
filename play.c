@@ -6,48 +6,57 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:01 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/18 11:39:39 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/15 15:48:13 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_filler.h"
 
-int	can_put(t_game *game, t_token *token, int x, int y)
+int	space_found(t_coords curr, t_game *game, t_token *token, t_coords start)
 {
-	int		i;
-	int		j;
-	char	t;
-	int		overlap;
+	if (curr.x < 0 || curr.y < 0)
+		return (0);
+	else if (start.x + token->dims.x + token->start.x > game->width
+		|| start.y + token->dims.y + token->start.y > game->height)
+		return (0);
+	else if (ft_toupper(game->board[curr.y][curr.x]) == game->enemy)
+		return (0);
+	return (1);
+}
 
-	i = 0;
+int	count_overlaps(t_coords curr, t_game *game, int *overlap)
+{
+	if (ft_toupper(game->board[curr.y][curr.x]) == game->me)
+		(*overlap)++;
+	return (*overlap);
+}
+
+int	can_put(t_game *game, t_token *token, t_coords start)
+{
+	t_coords	curr;
+	int			overlap;
+	int			i;
+	int			j;
+
+	i = -1;
 	overlap = 0;
-	while (i < token->height)
+	while (++i < token->height)
 	{
-		j = 0;
-		while (j < token->width)
+		j = -1;
+		while (++j < token->width)
 		{
-			t = token->map[i][j];
-			if (t != '.')
+			if (token->map[i][j] != '.')
 			{
-				if (x + j < 0 || y + i < 0)
+				curr.x = start.x + j;
+				curr.y = start.y + i;
+				if (!space_found(curr, game, token, start))
 					return (0);
-				else if (x + token->dims.x + token->start.x > game->width
-					|| y + token->dims.y + token->start.y > game->height)
-					return (0);
-				else if (ft_toupper(game->board[i + y][x + j]) == game->enemy)
-					return (0);
-				else if (ft_toupper(game->board[i + y][x + j]) == game->me)
-					overlap++;
-				else if (overlap > 1)
+				else if (count_overlaps(curr, game, &overlap) > 1)
 					return (0);
 			}
-			j++;
 		}
-		i++;
 	}
-	if (overlap == 1)
-		return (1);
-	return (0);
+	return (overlap == 1);
 }
 
 int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
@@ -64,24 +73,16 @@ int	try_put(t_game *game, t_token *token, t_coords start, t_coords end)
 		start.x = tmp;
 		while (start.x <= end.x)
 		{
-			if (can_put(game, token, start.x, start.y))
+			if (can_put(game, token, start))
 			{
 				ok = 1;
-				if (check_all_points(game, token, start) < result)
-				{
-					result = check_all_points(game, token, start);
-					game->result.x = start.x;
-					game->result.y = start.y;
-				}
+				result = get_closest(game, token, start, result);
 			}
 			start.x++;
 		}
 		start.y++;
 	}
-	if (ok)
-		return (1);
-	else
-		return (0);
+	return (ok);
 }
 
 int	try_solve(t_game *game, t_token *token)

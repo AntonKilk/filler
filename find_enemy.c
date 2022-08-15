@@ -6,62 +6,11 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 10:49:33 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/18 11:50:23 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/15 15:55:49 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_filler.h"
-
-int	find_closest(t_coords me, t_coords closest)
-{
-	int	diffx;
-	int	diffy;
-	int	result;
-
-	diffx = ft_abs(me.x - closest.x);
-	diffy = ft_abs(me.y - closest.y);
-	result = diffx + diffy;
-	return (result);
-}
-
-t_coords	searchup(t_game *game, t_coords curr)
-{
-	int	board_w;
-
-	board_w = game->width;
-	while (curr.y >= 0)
-	{
-		while (curr.x >= 0)
-		{
-			if (ft_toupper(game->board[curr.y][curr.x]) == game->enemy)
-				return (curr);
-			curr.x--;
-		}
-		curr.x = board_w;
-		curr.y--;
-	}
-	curr.y = -1;
-	curr.x = -1;
-	return (curr);
-}
-
-t_coords	searchdown(t_game *game, t_coords curr)
-{
-	while (curr.y < game->height)
-	{
-		while (curr.x < game->width)
-		{
-			if (ft_toupper(game->board[curr.y][curr.x]) == game->enemy)
-				return (curr);
-			curr.x++;
-		}
-		curr.x = 0;
-		curr.y++;
-	}
-	curr.y = -1;
-	curr.x = -1;
-	return (curr);
-}
 
 t_coords	find_enemy(t_game *game, t_coords start)
 {
@@ -77,7 +26,7 @@ t_coords	find_enemy(t_game *game, t_coords start)
 		closest = up;
 	else
 	{
-		if (find_closest(start, up) < find_closest(start, down))
+		if (calc_dist(start, up) < calc_dist(start, down))
 			closest = up;
 		else
 			closest = down;
@@ -85,7 +34,7 @@ t_coords	find_enemy(t_game *game, t_coords start)
 	return (closest);
 }
 
-int	check_all_points(t_game *game, t_token *token, t_coords start)
+int	try_all_points(t_game *game, t_token *token, t_coords start)
 {
 	int			i;
 	int			j;
@@ -108,12 +57,23 @@ int	check_all_points(t_game *game, t_token *token, t_coords start)
 				start.x = a + j;
 				start.y = b + i;
 				closest = find_enemy(game, start);
-				if (find_closest(start, closest) < result)
-					result = find_closest(start, closest);
+				if (calc_dist(start, closest) < result)
+					result = calc_dist(start, closest);
 			}
 			j++;
 		}
 		i++;
+	}
+	return (result);
+}
+
+int	get_closest(t_game *game, t_token *token, t_coords start, int result)
+{
+	if (try_all_points(game, token, start) < result)
+	{
+		result = try_all_points(game, token, start);
+		game->result.x = start.x;
+		game->result.y = start.y;
 	}
 	return (result);
 }

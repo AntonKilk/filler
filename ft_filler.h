@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:48:27 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/18 11:37:31 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/15 15:54:37 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ int	read_token(t_token *token, char **line);
 int	try_solve(t_game *game, t_token *token);
 
 /* find_enemy.c */
-int	check_all_points(t_game *game, t_token *token, t_coords start);
+int	get_closest(t_game *game, t_token *token, t_coords start, int result);
+
+/* search_utils.c */
+int	calc_dist(t_coords me, t_coords closest);
+t_coords	searchdown(t_game *game, t_coords curr);
+t_coords	searchup(t_game *game, t_coords curr);
 
 #endif
