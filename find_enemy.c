@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 10:49:33 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/15 15:55:49 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/17 11:26:39 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ t_coords	find_enemy(t_game *game, t_coords start)
 	return (closest);
 }
 
+void	get_result(t_game *game, t_coords start, int *result)
+{
+	t_coords	closest;
+
+	closest = find_enemy(game, start);
+	if (calc_dist(start, closest) < *result)
+		*result = calc_dist(start, closest);
+}
+
 int	try_all_points(t_game *game, t_token *token, t_coords start)
 {
 	int			i;
@@ -41,28 +50,23 @@ int	try_all_points(t_game *game, t_token *token, t_coords start)
 	int			result;
 	int			a;
 	int			b;
-	t_coords	closest;
 
 	a = start.x;
 	b = start.y;
 	result = game->width * game->height;
-	i = 0;
-	while (i < token->height)
+	i = -1;
+	while (++i < token->height)
 	{
-		j = 0;
-		while (j < token->width)
+		j = -1;
+		while (++j < token->width)
 		{
 			if (token->map[i][j] != '.')
 			{
 				start.x = a + j;
 				start.y = b + i;
-				closest = find_enemy(game, start);
-				if (calc_dist(start, closest) < result)
-					result = calc_dist(start, closest);
+				get_result(game, start, &result);
 			}
-			j++;
 		}
-		i++;
 	}
 	return (result);
 }
