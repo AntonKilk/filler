@@ -17,20 +17,26 @@ OBJS = main.o\
 
 HDR = ft_filler.h
 FLAGS = -Wall -Wextra -Werror
-LIBFT = libft/
+LIBFTDIR = libft/
+LIBFT = libft/libft.a
 
 all: $(NAME)
 
-$(NAME):
-	make -C $(LIBFT)
-	gcc $(FLAGS) -o $(NAME) $(SRCS) -I $(HDR) -L. libft/libft.a
+$(NAME): $(OBJS) $(LIBFT)
+	gcc $(FLAGS) -o $(NAME) $(SRCS) -I $(HDR) -L. $(LIBFT)
+
+$(LIBFT):
+	make -C $(LIBFTDIR)
+
+$(OBJS): $(SRCS)
+	@gcc $(FLAGS) -c $< -o $@
 
 clean:
 	/bin/rm -f $(OBJS)
-	make -C $(LIBFT) clean
+	make -C $(LIBFTDIR) clean
 
 fclean: clean
 	/bin/rm -f $(NAME)
-	make -C $(LIBFT) fclean
+	make -C $(LIBFTDIR) fclean
 
 re: fclean all
