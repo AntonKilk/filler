@@ -8,7 +8,6 @@ MYWIN=0
 ENEMYWIN=0
 GAMES=1
 
-echo akilk wins: $WIN
 echo Write player name:
 read pname
 
