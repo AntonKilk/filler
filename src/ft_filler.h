@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:48:27 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/17 11:44:02 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/06 08:54:48 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define FT_FILLER_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 # include <fcntl.h>
 
 typedef struct s_coords

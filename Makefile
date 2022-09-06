@@ -1,11 +1,13 @@
 NAME = akilk.filler
-SRCS = main.c\
+SRC_DIR = ./src/
+SRC_FILES = main.c\
 	play.c\
 	read_board.c\
 	read_token.c\
 	read.c\
 	search_utils.c\
-	find_enemy.c\
+	find_enemy.c
+SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 OBJS = main.o\
 	play.o\
