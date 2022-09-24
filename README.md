@@ -18,3 +18,4 @@ Example of tokens:
 To use it, clone the repo and:
 - do `make`. After that  run a virtual machine with a map and players like this: `./filler_vm -f ./maps/map00 -p1 players/carli.filler -p2 players/akilk.filler` or:
 - run a script `bash start.sh` to install and run one game.
+NB! The game is runnning in the console only. No visualizer applied.
